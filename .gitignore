@@ -1,0 +1,18 @@
+# Python
+backend/__pycache__/
+backend/*.py[cod]
+venv/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# General
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+backend/uploads/
+backend/results/
+backend/state.json
