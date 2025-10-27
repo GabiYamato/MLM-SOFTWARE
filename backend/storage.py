@@ -176,7 +176,10 @@ class StateManager:
                                 else None
                             ),
                             processed_image_base64=image.get('processed_image_base64', ''),
-                            threshold_image_base64=image.get('threshold_image_base64', ''),
+                            threshold_image_base64=(
+                                image.get('threshold_image_base64')
+                                or image.get('processed_image_base64', '')
+                            ),
                             lines=[
                                 self._coerce_line(line, line_index + 1)
                                 for line_index, line in enumerate(image.get('lines', []))
@@ -206,7 +209,10 @@ class StateManager:
                             float(image['average_mli_um']) if image.get('average_mli_um') is not None else None
                         ),
                         processed_image_base64=image.get('processed_image_base64', ''),
-                        threshold_image_base64=image.get('threshold_image_base64', ''),
+                        threshold_image_base64=(
+                            image.get('threshold_image_base64')
+                            or image.get('processed_image_base64', '')
+                        ),
                         lines=[
                             self._coerce_line(line, line_index + 1)
                             for line_index, line in enumerate(image.get('lines', []))

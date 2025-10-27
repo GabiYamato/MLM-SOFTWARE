@@ -77,8 +77,14 @@ def _count_intercepts(samples: np.ndarray) -> Tuple[int, np.ndarray]:
         return 0, np.array([], dtype=np.int32)
     active = samples > 0
     transitions = np.diff(active.astype(np.int8))
-    indices = np.where(transitions != 0)[0] + 1
-    return int(indices.size), indices
+    change_indices = np.where(transitions != 0)[0] + 1
+    usable_length = change_indices.size - (change_indices.size % 2)
+    if usable_length <= 0:
+        return 0, np.array([], dtype=np.int32)
+    paired = change_indices[:usable_length].reshape(-1, 2)
+    midpoints = np.round(paired.mean(axis=1)).astype(np.int32)
+    midpoints = np.clip(midpoints, 0, samples.size - 1)
+    return int(midpoints.size), midpoints
 
 
 def _encode_image_to_base64(image: np.ndarray) -> str:
